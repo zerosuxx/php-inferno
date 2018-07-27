@@ -396,7 +396,6 @@ class Greed
 	* See the  file classes/Salespeople.php to see how to assemble the classes. You will need to write
 	* the code that assembles the Salespeople and fill in some of the logic in the Salesperson classes.
 	*/
-
 	public function one_person_hierarchy_makes_it_easy()
 	{
 		$hierarchy = SalesHierarchy::build('1{Ricky|Clueless}');

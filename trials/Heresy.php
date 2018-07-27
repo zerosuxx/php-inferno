@@ -10,26 +10,26 @@ class Heresy
 
 	public function null_is_converted_to_empty_string_for_lexical_comparison()
 	{
-		assert_that("" == null)->is_identical_to(__);
+		assert_that("" == null)->is_identical_to(true);
 	}
 
 	public function strings_that_evaluate_to_any_value_of_zero_are_equal_to_each_other_and_zero()
 	{
-		assert_that(0 == "0")->is_identical_to(__);
-		assert_that("0" == "0.0")->is_identical_to(__);
-		assert_that("0" == "00")->is_identical_to(__);
+		assert_that(0 == "0")->is_identical_to(true);
+		assert_that("0" == "0.0")->is_identical_to(true);
+		assert_that("0" == "00")->is_identical_to(true);
 	}
 
 	public function strings_that_evaluate_to_the_digit_zero_are_falsey()
 	{
 		$test = (bool) "0";
-		assert_that($test)->is_identical_to(__);
+		assert_that($test)->is_identical_to(false);
 	}
 
 	public function strings_that_evaluate_to_a_value_of_zero_that_is_not_the_digit_zero_are_truthy()
 	{
 		$test = (bool) "0.0";
-		assert_that($test)->is_identical_to(__);
+		assert_that($test)->is_identical_to(true);
 	}
 
 	public function strings_are_converted_to_numbers_when_compared_or_added_to_numbers()
@@ -38,10 +38,10 @@ class Heresy
 		$second = 10 + "Cavalcante";
 		$third = 11 + "6th circle";
 
-		assert_that($first)->is_identical_to(__);
-		assert_that($second)->is_identical_to(__);
-		assert_that($third)->is_identical_to(__);
-		assert_that('Cavaltante' == 0)->is_identical_to(__);
+		assert_that($first)->is_identical_to(14);
+		assert_that($second)->is_identical_to(10);
+		assert_that($third)->is_identical_to(17);
+		assert_that('Cavaltante' == 0)->is_identical_to(true);
 
 		// Virgil says: PHP's odd string to number conversion didn't come out of thin air.
 		// It is based on a Unix function written a while back. What's odd may not be the
@@ -57,14 +57,14 @@ class Heresy
 		$a = 100;
 		$a[0] = 'Cavalcante';
 
-		assert_that($a)->is_identical_to(__);
+		assert_that($a)->is_identical_to(100);
 	}
 
 	public function strings_that_are_referenced_as_arrays_will_not_be_manipulated_the_way_you_expect()
 	{
 		$a = 'Farinata';
 		$a[0] = 'Cavalcante';
-		assert_that($a)->is_identical_to(__);
+		assert_that($a)->is_identical_to('Carinata');
 	}
 
 	public function floats_are_not_precise_and_should_not_be_compared_for_equality()

@@ -198,9 +198,9 @@ class Dog implements Animal
 
 // Uncomment me and see what happens
 
-// class Deer implements Animal
-// {
-// }
+//class Deer implements Animal
+//{
+//}
 
 
 // Uncomment me and see what happens

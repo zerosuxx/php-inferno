@@ -386,7 +386,8 @@ class Tree extends Plant
 
 	public function description_from_nuclear_powerplant()
 	{
-		return Nuclear_Power_Plant::amended_description();
+		//return Nuclear_Power_Plant::amended_description();
+        return $this->description() . " with a fully-featured cafeteria!";
 	}
 }
 

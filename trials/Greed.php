@@ -399,9 +399,6 @@ class Greed
 
 	public function one_person_hierarchy_makes_it_easy()
 	{
-        $hierarchy = SalesHierarchy::build('0{Blake|Sociopath}0{Dave|Clueless}1{Shelley|Loser}1{Ricky|Loser}0{Williamson|Clueless}1{George|Loser}1{Mitch|Loser}');
-        var_dump($hierarchy->root->left()->left());
-        die();
 		$hierarchy = SalesHierarchy::build('1{Ricky|Clueless}');
 		$hierarchy->assign_to_best_rep(new Lead('Rio Rancho', 10000));
 

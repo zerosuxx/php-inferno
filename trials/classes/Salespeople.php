@@ -17,7 +17,9 @@ class SalesHierarchy
     /**
      * @var Salesperson - the top sales guy, who runs everyone.
      */
-    public $root;
+    private $root;
+    
+    //private $persons = [];
 
     /**
      * @param Salesperson
@@ -50,9 +52,11 @@ class SalesHierarchy
     public function assignChilds(array $parsedPersons)
     {
         $root = $this->root;
+        //$this->persons[] = $root;
         foreach ($parsedPersons as $parsedPerson) {
             $child = Salesperson::buildPerson($parsedPerson);
             $this->assignChild($root, $child);
+            //$this->persons[] = $child;
             $root = $child;
         }
     }
@@ -203,12 +207,24 @@ abstract class Salesperson
     {
         // tip: you may want to override this function in one of the subclasses.
 
-        return true;
+        return $this->current_lead === null;
     }
 
     public function get_best_sales_rep(Lead $lead, Salesperson $winner_so_far = null)
     {
-        return $this;
+        if( $this->can_take_lead($lead) && ( !$winner_so_far || $this->success_rate() > $winner_so_far->success_rate() ) ) {
+            $winner_so_far = $this;
+        }
+        
+        if($this->left) {
+            $winner_so_far = $this->left->get_best_sales_rep($lead, $winner_so_far);
+        }
+        
+        if($this->right) {
+            $winner_so_far = $this->right->get_best_sales_rep($lead, $winner_so_far);
+        }
+        
+        return $winner_so_far;
     }
 
     /**
@@ -252,7 +268,6 @@ abstract class Salesperson
             throw new InvalidArgumentException('Invalid person type!');
         }
         $person = new $type();
-        $person->name = $name;
         $person->setNodeType($node);
         return $person;
     }
@@ -261,16 +276,29 @@ abstract class Salesperson
 class Sociopath extends Salesperson
 {
     const DEFAULT_SUCCESS_RATE = 0.85;
+    
+    protected function can_take_lead(Lead $lead) {
+        return parent::can_take_lead($lead) && $lead->value() >= 1000000;
+    }
+    
+    public function getLevel() {
+        return 3;
+    }
 
     public function success_rate()
     {
-        return self::SUCCESS_RATE;
+        return self::DEFAULT_SUCCESS_RATE;
     }
 }
 
 class Clueless extends Salesperson
 {
     const DEFAULT_SUCCESS_RATE = 0.45;
+
+    public function getLevel() {
+        return 2;
+    }
+
 
     public function success_rate()
     {
@@ -281,7 +309,11 @@ class Clueless extends Salesperson
 class Loser extends Salesperson
 {
     const DEFAULT_SUCCESS_RATE = 0.02;
-
+    
+    public function getLevel() {
+        return 1;
+    }
+    
     public function success_rate()
     {
         $rate = self::DEFAULT_SUCCESS_RATE;

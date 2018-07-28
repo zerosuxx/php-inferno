@@ -66,7 +66,7 @@ class Pathway_Through_Darkness
 		{
 			$this->print_total();
 			$this->print_message($trial, $e);
-			exit(0);
+			exit($e instanceof AssertException ? 0 : 1);
 		}
 	}
 

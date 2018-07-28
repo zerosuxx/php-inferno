@@ -14,7 +14,9 @@ Abandon hope, all ye who enter here...
 
 <?php
 echo "\033[0m";
-error_reporting(E_ALL ^ E_DEPRECATED); #PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; ClassWithNameAsConstructor has a deprecated constructor
+#PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; ClassWithNameAsConstructor has a deprecated constructor
+#PHP Warning/Notice:  A non-numeric value encountered in /home/travis/build/zerosuxx/php-inferno/trials/Heresy.php on line 38
+error_reporting(E_ALL ^ E_DEPRECATED ^ E_WARNING ^ E_NOTICE);
 
 $min_version = '5.4.9';
 if (version_compare($min_version, phpversion()) > 0)

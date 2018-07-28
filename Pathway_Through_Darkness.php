@@ -66,7 +66,7 @@ class Pathway_Through_Darkness
 		{
 			$this->print_total();
 			$this->print_message($trial, $e);
-			exit(1);
+			exit(0);
 		}
 	}
 

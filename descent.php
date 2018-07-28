@@ -14,7 +14,7 @@ Abandon hope, all ye who enter here...
 
 <?php
 echo "\033[0m";
-error_reporting(E_ALL);
+error_reporting(E_ALL ^ E_DEPRECATED); #PHP Deprecated:  Methods with the same name as their class will not be constructors in a future version of PHP; ClassWithNameAsConstructor has a deprecated constructor
 
 $min_version = '5.4.9';
 if (version_compare($min_version, phpversion()) > 0)

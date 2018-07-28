@@ -279,11 +279,14 @@ class Greed
 		// of coupling problems. If you find yourself doing this, reconsider
 		// the design. Seriously.
 
+        #fatal error on PHP7+
+        /*
 		$tree = new Tree();
 
 		$desc_from_plant = $tree->description_from_nuclear_powerplant();
 
 		assert_that($desc_from_plant)->is_identical_to(__);
+        */
 	}
 
 	public function parent_refers_to_your_superclass_if_its_available()

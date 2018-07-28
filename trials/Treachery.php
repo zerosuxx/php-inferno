@@ -154,8 +154,8 @@ class Treachery
 	{
 		// not even a warning...
 		
-		//assert_that(0090)->is_identical_to(__); #parse error on php7+
-		//assert_that(0183)->is_identical_to(__); #parse error on php7+
+		//assert_that(0090)->is_identical_to(__); #parse error on PHP7+
+		//assert_that(0183)->is_identical_to(__); #parse error on PHP7+
 	}
 
 	/**

@@ -88,6 +88,7 @@ class Pathway_Through_Darkness
 
 	private function call_with_aspects(ReflectionMethod $method, callable $fn)
 	{
+		$defaultErrorReporting = error_reporting();
 		$comment = $method->getDocComment();
 		$matches = [];
 		preg_match_all('/@([a-zA-Z\_]+)/', $comment, $matches);
@@ -96,7 +97,7 @@ class Pathway_Through_Darkness
 			error_reporting(E_ALL ^ E_WARNING ^ E_NOTICE ^ E_STRICT);
 		}
 		$fn();
-		error_reporting(E_ALL);
+		error_reporting($defaultErrorReporting);
 	}
 
 	private function print_total()

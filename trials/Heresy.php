@@ -71,7 +71,7 @@ class Heresy
 	{
 		$value = floor((0.1 + 0.7) * 10);
 
-		assert_that($value)->is_identical_to(__);
+		assert_that($value)->is_identical_to(7.0);
 
 		// Virgil says: This is actually a problem in any language that uses a binary value to store
 		// decimal values without arbitrary precision (including Java, Python, Ruby and many others):

@@ -18,8 +18,6 @@ class SalesHierarchy
      * @var Salesperson - the top sales guy, who runs everyone.
      */
     private $root;
-    
-    //private $persons = [];
 
     /**
      * @param Salesperson
@@ -49,19 +47,17 @@ class SalesHierarchy
         return $this->root->total_risk_incurred();
     }
 
-    public function assignChilds(array $parsedPersons)
+    private function assignChildren(array $parsedChildren)
     {
         $root = $this->root;
-        //$this->persons[] = $root;
-        foreach ($parsedPersons as $parsedPerson) {
-            $child = Salesperson::buildPerson($parsedPerson);
+        foreach ($parsedChildren as $parsedChild) {
+            $child = Salesperson::buildPerson($parsedChild);
             $this->assignChild($root, $child);
-            //$this->persons[] = $child;
             $root = $child;
         }
     }
 
-    public function assignChild(Salesperson $parent, Salesperson $child)
+    private function assignChild(Salesperson $parent, Salesperson $child)
     {
         if ($parent->getNodeType() === 0 && !$parent->left()) {
             $child->set_parent($parent);
@@ -91,7 +87,7 @@ class SalesHierarchy
         $root = Salesperson::buildPerson($parsedPersons[0]);
 
         $salesHierarchy = new static($root);
-        $salesHierarchy->assignChilds(array_slice($parsedPersons, 1));
+        $salesHierarchy->assignChildren(array_slice($parsedPersons, 1));
         return $salesHierarchy;
     }
 
@@ -263,7 +259,6 @@ abstract class Salesperson
     {
         $type = $personData['type'];
         $node = $personData['node'];
-        $name = $personData['name'];
         if (!class_exists($type) || !is_subclass_of($type, __CLASS__)) {
             throw new InvalidArgumentException('Invalid person type!');
         }
@@ -298,7 +293,6 @@ class Clueless extends Salesperson
     public function getLevel() {
         return 2;
     }
-
 
     public function success_rate()
     {

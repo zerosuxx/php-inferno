@@ -84,14 +84,15 @@ class Heresy
 		$string2 = 'abcd';
 		$string3 = 'abc';
 
-		assert_that($string1 == $string3)->is_identical_to(__);
-		assert_that($string1 === $string3)->is_identical_to(__);
-		assert_that($string1 < $string2)->is_identical_to(__);
+		assert_that($string1 == $string3)->is_identical_to(true);
+		assert_that($string1 === $string3)->is_identical_to(true);
+		assert_that($string1 < $string2)->is_identical_to(true);
 
 		$strings = [$string2, $string3, $string1];
 		sort($strings);
 
-		assert_that($strings)->is_identical_to(__);
+		assert_that($strings)->is_identical_to(['abc', 'abc', 'abcd']);
+		assert_that($strings)->is_identical_to(['abc', 'abc', 'abcd']);
 	}
 
 	public function numbers_are_compared_through_normal_math()
@@ -100,24 +101,24 @@ class Heresy
 		$number2 = 3.3;
 		$number3 = 1.0;
 
-		assert_that($number1 == $number3)->is_identical_to(__);
-		assert_that($number1 === $number3)->is_identical_to(__);
-		assert_that($number1 < $number2)->is_identical_to(__);
+		assert_that($number1 == $number3)->is_identical_to(true);
+		assert_that($number1 === $number3)->is_identical_to(false);
+		assert_that($number1 < $number2)->is_identical_to(true);
 
 		$numbers = [$number1, $number2, $number3];
 		sort($numbers);
 
-		assert_that($numbers)->is_identical_to(__);
+		assert_that($numbers)->is_identical_to([1, 1.0, 3.3]);
 	}
 
 	public function comparisons_with_NAN_are_always_false()
 	{
 		$number1 = 10;
 
-		assert_that($number1 == NAN)->is_identical_to(__);
-		assert_that($number1 > NAN)->is_identical_to(__);
-		assert_that($number1 < NAN)->is_identical_to(__);
-		assert_that(NAN == NAN)->is_identical_to(__);
+		assert_that($number1 == NAN)->is_identical_to(false);
+		assert_that($number1 > NAN)->is_identical_to(false);
+		assert_that($number1 < NAN)->is_identical_to(false);
+		assert_that(NAN == NAN)->is_identical_to(false);
 	}
 
 	public function strings_that_represent_numbers_are_compared_like_numbers()
@@ -126,9 +127,9 @@ class Heresy
 		$numeric2 = '124';
 		$numeric3 = '0124';
 
-		assert_that($numeric1 == '123')->is_identical_to(__);
-		assert_that($numeric2 > $numeric1)->is_identical_to(__);
-		assert_that($numeric3 > $numeric1)->is_identical_to(__);
+		assert_that($numeric1 == '123')->is_identical_to(true);
+		assert_that($numeric2 > $numeric1)->is_identical_to(true);
+		assert_that($numeric3 > $numeric1)->is_identical_to(true);
 
 		// Virgil says: the ways you can combine type interpolation and the comparison operators
 		// are virtually endless. It's safe to say that the simplicity afforded by weak typing
@@ -142,13 +143,13 @@ class Heresy
 		$object1 = new ClassWithProperties();
 		$object2 = new ClassWithProperties();
 
-		assert_that($object1 == $object2)->is_identical_to(__);
-		assert_that($object1 === $object2)->is_identical_to(__);
+		assert_that($object1 == $object2)->is_identical_to(true);
+		assert_that($object1 === $object2)->is_identical_to(false);
 
 		$object2->property_one = 'bye';
 
-		assert_that($object1 == $object2)->is_identical_to(__);
-		assert_that($object1 === $object2)->is_identical_to(__);
+		assert_that($object1 == $object2)->is_identical_to(false);
+		assert_that($object1 === $object2)->is_identical_to(false);
 	}
 
 	public function object_containment_in_an_array_is_determined_by_equality_of_properties()
@@ -158,7 +159,7 @@ class Heresy
 
 		$array = [$object1];
 
-		assert_that(in_array($object2, $array))->is_identical_to(__);
+		assert_that(in_array($object2, $array))->is_identical_to(true);
 	}
 
 	public function object_containment_in_an_array_of_strings_determined_by_result_of__toString()
@@ -168,11 +169,11 @@ class Heresy
 
 		$array1 = [$object1];
 
-		assert_that(in_array('wello!', $array1))->is_identical_to(__);
+		assert_that(in_array('wello!', $array1))->is_identical_to(true);
 
 		$array2 = ['wello!'];
 
-		assert_that(in_array($object1, $array2))->is_identical_to(__);
+		assert_that(in_array($object1, $array2))->is_identical_to(true);
 
 		// Virgil says: For this reason, adding __toString to objects is a non-trivial
 		// change to the functionality of your code. Be careful to understand the implications

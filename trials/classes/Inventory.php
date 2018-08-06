@@ -5,25 +5,32 @@ class Inventory
 	public static function parse_inventory($inventory, $option = null)
 	{	
 		// Polyaenus says: I don't need those noisy warning levels...
-		error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE & ~E_WARNING);
-		
-		if (get_class($inventory) == 'array') $inventory = $inventory[0];
-		$inventory = explode(',', $inventory);
+		//error_reporting(E_ALL & ~E_STRICT & ~E_NOTICE & ~E_WARNING);
+
+		if(is_array($inventory) && count($inventory) === 1) {
+            $inventory = $inventory[0];
+        }
+
+        if(is_string($inventory)) {
+            $inventory = explode(',', $inventory);
+        }
+
 		$temp = array();
 		for ($i = 0; $i < count($inventory); $i++)
 		{
-			if (trim($inventory[$i]))
+		    $trimmedValue = trim($inventory[$i], ' ');
+			if ($trimmedValue !== '')
 			{
-				$temp[] = trim($inventory[$j]);
+				$temp[] = $trimmedValue;
 			}
 		}
 		$inventory = $temp;
 		sort($inventory);
 		$result = array(
-			'list' => $inventory,
-			'cows' => count($inventory),
+            'cows' => count($inventory),
+            'list' => $inventory,
 		);
-		if ($option != 0 && $option == 'freq') 
+		if ($option && $option[0] == 'freq')
 		{
 			$freqs = array(); 
 			foreach ($inventory as $cow)

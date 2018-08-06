@@ -10,7 +10,7 @@ class Violence
 	public function exceptions_are_objects()
 	{
 		$exception = new Exception();
-		assert_that(is_object($exception))->is_identical_to(__);
+		assert_that(is_object($exception))->is_identical_to(true);
 	}
 
 	public function all_exceptions_descend_from_the_class_Exception()
@@ -18,8 +18,8 @@ class Violence
 		$exception1 = new InvalidArgumentException();
 		$exception2 = new BadMethodCallException();
 
-		assert_that($exception1 instanceof Exception)->is_identical_to(__);
-		assert_that($exception2 instanceof Exception)->is_identical_to(__);
+		assert_that($exception1 instanceof Exception)->is_identical_to(true);
+		assert_that($exception2 instanceof Exception)->is_identical_to(true);
 	}
 
 	public function exceptions_can_be_thrown_and_caught_which_interrupts_program_flow()
@@ -35,7 +35,7 @@ class Violence
 		{
 			$value -= 5;
 		}
-		assert_that($value)->is_identical_to(__);
+		assert_that($value)->is_identical_to(5);
 	}
 
 	public function exceptions_are_caught_in_order_specified_by_the_catch_clauses()
@@ -53,7 +53,7 @@ class Violence
 		{
 			$value = 10;
 		}
-		assert_that($value)->is_identical_to(__);
+		assert_that($value)->is_identical_to(5);
 
 	}
 
@@ -76,7 +76,7 @@ class Violence
 		{
 			$value = 20;
 		}
-		assert_that($value)->is_identical_to(__);
+		assert_that($value)->is_identical_to(20);
 	}
 
 	private function get_person_in_7th_circle($index)
@@ -106,8 +106,8 @@ class Violence
 			$message_to_customers = 'Sorry, you picked the wrong eternal sufferer. Please try again.';
 		}
 
-		assert_that($message_to_customers)->contains_string(__);
-		assert_that(get_class($e))->is_identical_to(__);
+		assert_that($message_to_customers)->contains_string('Sorry, you picked the wrong eternal sufferer. Please try again.');
+		assert_that(get_class($e))->is_identical_to('OutOfBoundsException');
 
 		// Virgil says: Using a generic Exception handler (one that catches the base type Exception instead
 		// of a subclass) is a bad idea. In this case, a program bug was presented to our customers
@@ -125,8 +125,8 @@ class Violence
 		{
 
 		}
-		assert_that(get_class($e))->is_identical_to(__);
-		assert_that($e->getMessage())->is_identical_to(__);
+		assert_that(get_class($e))->is_identical_to('CustomException');
+		assert_that($e->getMessage())->is_identical_to('wello!');
 	}
 
 	public function exceptions_have_error_codes_that_can_be_customized()

@@ -21,9 +21,9 @@ class Treachery
 		$another_string = "Caina";
 		$a_third_string = '3 circles';
 
-		assert_that(isset($the_message[$another_string]))->is_identical_to(__);
-		assert_that($the_message[$another_string])->is_identical_to(__);
-		assert_that($the_message[$a_third_string])->is_identical_to(__);
+		assert_that(isset($the_message[$another_string]))->is_identical_to(false);
+		assert_that($the_message[$another_string])->is_identical_to('A');
+		assert_that($the_message[$a_third_string])->is_identical_to('e');
 
 	}
 
@@ -33,11 +33,11 @@ class Treachery
 	public function the_static_keyword_basically_doesnt_matter()
 	{
 		$calculator = new ScrewedCalculator();
-		assert_that($calculator->add(1, 2))->is_equal_to(__);
-		assert_that($calculator->multiply(3, 5))->is_equal_to(__);
+		assert_that($calculator->add(1, 2))->is_equal_to(3);
+		assert_that($calculator->multiply(3, 5))->is_equal_to(15);
 
-		assert_that(ScrewedCalculator::add(1, 2))->is_equal_to(__);
-		assert_that(ScrewedCalculator::multiply(3, 5))->is_equal_to(__);
+		assert_that(ScrewedCalculator::add(1, 2))->is_equal_to(3);
+		assert_that(ScrewedCalculator::multiply(3, 5))->is_equal_to(15);
 
 		// Virgil says: this is a betrayal of what it means to be an
 		// instance method. If you want a method to be called statically,
@@ -48,7 +48,7 @@ class Treachery
 	{
 		$value = null;
 
-		assert_that($value < -1 && $value == 0)->is_identical_to(__);
+		assert_that($value < -1 && $value == 0)->is_identical_to(true);
 	}
 
 	public function needle_haystack_on_builtin_functions_is_confusing()
@@ -58,7 +58,7 @@ class Treachery
 		$giant_string = implode($giants, ',');
 		$giant_string_again = implode(',', $giants);
 
-		assert_that($giant_string === $giant_string_again)->is_identical_to(__);
+		assert_that($giant_string === $giant_string_again)->is_identical_to(true);
 
 		$is_tityus = function($giant)
 		{
@@ -66,10 +66,10 @@ class Treachery
 		};
 
 		$map = array_map($is_tityus, $giants);
-		assert_that($map)->is_identical_to(__);
+		assert_that($map)->is_identical_to([false, true, false]);
 
 		$filter = array_filter($giants, $is_tityus);
-		assert_that($filter)->is_identical_to(__);
+		assert_that($filter)->is_identical_to([1 => 'Tityus']);
 
 		// Virgil says: remembering whether the function is the first or second argument gets
 		// me every time! PHP's string functions often exhibit this behavior.
@@ -87,7 +87,7 @@ class Treachery
 		// $this = 'foo';
 
 		assert_that(is_string($this))->is_identical_to(false);
-		assert_that($this->helper_function())->is_identical_to(2);
+		assert_that($this->helper_function())->is_identical_to(__);
 
 		// and yet...
 

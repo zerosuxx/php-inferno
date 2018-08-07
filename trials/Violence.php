@@ -245,7 +245,11 @@ class Violence
 
 		assert(false);
 
-		assert_that($message)->contains_string('assert(): assert(false) failed');
+		if(PHP_MAJOR_VERSION === 7) {
+            assert_that($message)->contains_string('assert(): assert(false) failed');
+        } else {
+            assert_that($message)->contains_string('assert(): Assertion failed');
+        }
 
 		restore_error_handler();
 	}

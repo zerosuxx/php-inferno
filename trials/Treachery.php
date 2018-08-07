@@ -87,16 +87,16 @@ class Treachery
 		// $this = 'foo';
 
 		assert_that(is_string($this))->is_identical_to(false);
-		assert_that($this->helper_function())->is_identical_to(__);
+		assert_that($this->helper_function())->is_identical_to(2);
 
 		// and yet...
 
 		$this_string = 'this';
 		// $$this_string = 'foo'; // the "bling bling" operator. #fatal error on PHP7+
 
-		assert_that(is_string($this))->is_identical_to(__);
-		assert_that($this)->is_identical_to(__);
-		assert_that($this->helper_function())->is_identical_to(__);
+		assert_that(is_string($this))->is_identical_to(false);
+		assert_that($this)->is_identical_to($this);
+		assert_that($this->helper_function())->is_identical_to(2);
 	}
 
 	public function catchable_fatal_errors()
@@ -113,9 +113,9 @@ class Treachery
 		};
 
 		// roll right through that type hint
-		$name = $get_brothers_name(new Cain());
+		$name = $get_brothers_name(new Abel());
 
-		assert_that($name)->is_identical_to(__);
+		assert_that($name)->is_identical_to('Cain');
 
 		restore_error_handler();
 	}

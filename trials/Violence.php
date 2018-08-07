@@ -140,7 +140,7 @@ class Violence
 
 		}
 
-		assert_that($e->getCode())->is_identical_to(__);
+		assert_that($e->getCode())->is_identical_to(10);
 	}
 
 	public function exceptions_have_a_stack_trace_you_can_inspect_for_debugging_purposes()
@@ -157,16 +157,16 @@ class Violence
 		// check out http://www.php.net/manual/en/function.debug-backtrace.php
 		// for details about how it's structured
 
-		assert_that($trace[0]['function'])->is_identical_to(__);
-		assert_that($trace[0]['class'])->is_identical_to(__);
+		assert_that($trace[0]['function'])->is_identical_to('exceptions_have_a_stack_trace_you_can_inspect_for_debugging_purposes');
+		assert_that($trace[0]['class'])->is_identical_to('Violence');
 	}
 
 	public function backtraces_can_be_generated_at_any_time()
 	{
 		$trace = debug_backtrace();
 
-		assert_that($trace[0]['function'])->is_identical_to(__);
-		assert_that($trace[0]['class'])->is_identical_to(__);
+		assert_that($trace[0]['function'])->is_identical_to('backtraces_can_be_generated_at_any_time');
+		assert_that($trace[0]['class'])->is_identical_to('Violence');
 	}
 
 	public function set_error_handler_can_be_used_to_intercept_nonfatal_php_errors()
@@ -183,8 +183,8 @@ class Violence
 		$person = 'Phlegethon';
 		$noop = $person['Geryon'];
 
-		assert_that($received_err_code)->is_identical_to(__);
-		assert_that($received_err_message)->contains_string(__);
+		assert_that($received_err_code)->is_identical_to(2);
+		assert_that($received_err_message)->contains_string("Illegal string offset 'Geryon'");
 
 		restore_error_handler();
 	}
@@ -203,8 +203,8 @@ class Violence
 		// http://www.php.net/manual/en/errorfunc.constants.php
 		trigger_error('Phlegethon translates to "river of fire"');
 
-		assert_that($received_err_code)->is_identical_to(__);
-		assert_that($received_err_message)->contains_string(__);
+		assert_that($received_err_code)->is_identical_to(1024);
+		assert_that($received_err_message)->contains_string('Phlegethon translates to "river of fire"');
 
 		restore_error_handler();
 	}
@@ -222,13 +222,13 @@ class Violence
 
 	public function the_error_reporting_level_is_a_bitmask_over_what_error_types_are_emitted()
 	{
-		assert_that((error_reporting() & E_WARNING) > 0)->is_identical_to(__);
-		assert_that((error_reporting() & E_STRICT) > 0)->is_identical_to(__);
+		assert_that((error_reporting() & E_WARNING) > 0)->is_identical_to(false);
+		assert_that((error_reporting() & E_STRICT) > 0)->is_identical_to(true);
 
 		$old_value = error_reporting(E_ALL & ~E_STRICT); // calling it with an argument changes the reporting level
 
-		assert_that((error_reporting() & E_WARNING) > 0)->is_identical_to(__);
-		assert_that((error_reporting() & E_STRICT) > 0)->is_identical_to(__);
+		assert_that((error_reporting() & E_WARNING) > 0)->is_identical_to(true);
+		assert_that((error_reporting() & E_STRICT) > 0)->is_identical_to(false);
 
 		error_reporting($old_value);
 	}
@@ -245,7 +245,7 @@ class Violence
 
 		assert(false);
 
-		assert_that($message)->contains_string(__);
+		assert_that($message)->contains_string('assert(): assert(false) failed');
 
 		restore_error_handler();
 	}
@@ -260,7 +260,7 @@ class Violence
 
 		assert(false, "The harpies are everywhere!");
 
-		assert_that($message)->contains_string(__);
+		assert_that($message)->contains_string('assert(): The harpies are everywhere! failed');
 
 		restore_error_handler();
 	}
@@ -268,13 +268,13 @@ class Violence
 	public function setting_the_assert_bail_option_will_exit_process_unconditionally_even_though_message_is_at_warning_level()
 	{
 		// uncomment this and see what happens
-		// assert_options(ASSERT_BAIL, true);
+		//assert_options(ASSERT_BAIL, true);
 
 		set_error_handler(function($errno, $errmsg)
 		{
 			// hint: this is one of the PHP error level constants.
 			// http://php.net/manual/en/errorfunc.constants.php
-			assert_that($errno)->is_identical_to(__);
+			assert_that($errno)->is_identical_to(2);
 		});
 
 		assert(false);

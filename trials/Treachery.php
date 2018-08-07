@@ -92,7 +92,7 @@ class Treachery
 		// and yet...
 
 		$this_string = 'this';
-		$$this_string = 'foo'; // the "bling bling" operator.
+		// $$this_string = 'foo'; // the "bling bling" operator. #fatal error on PHP7+
 
 		assert_that(is_string($this))->is_identical_to(__);
 		assert_that($this)->is_identical_to(__);
